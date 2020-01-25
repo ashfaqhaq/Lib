@@ -4,6 +4,10 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate, login
 from .models import books_taken,books_requested
+import requests
+import speech_recognition as sr
+from bs4 import BeautifulSoup
+import urllib.request
 
 # Create your views here.
 def homepage(request):
@@ -37,3 +41,39 @@ def login_request(request):
 	return render(request = request,
 				template_name = "web1/login.html",
 				context={"form":form})
+
+def button(request):
+
+	return render(request,'web1/home.html')
+
+
+
+def output(request):
+	r = sr.Recognizer()
+
+	with sr.Microphone() as source:
+		print('Hey! Vishnu speak something')
+		audio = r.listen(source)
+		try:
+			text = r.recognize_google(audio)
+			
+			book = text.replace(" ",'+')
+			url = 'https://www.goodreads.com/search?q='+book
+			oururl = urllib.request.urlopen(url)
+			soup = BeautifulSoup(oururl,'html.parser')
+			phref=soup.table.tr.td.a['href']
+			s=phref.find("w/")
+			e=phref.find(".")
+			book_id = phref[s+2:e]
+			print(book_id)
+			new_url = 'https://www.goodreads.com'+phref
+			new_oururl = urllib.request.urlopen(new_url)
+			soup = BeautifulSoup(new_oururl,'html.parser')
+			x=soup.find_all('a',{'class':'actionLinkLite bookPageGenreLink'})
+			li=[]
+			for i in x:
+				li.append(i.text)
+			return render(request,'web1/home.html',{'list':li})
+		except:
+			text='Sorry cannot recognize your voice'
+	return render(request,'web1/home.html',{'text':text})

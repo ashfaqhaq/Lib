@@ -1,91 +1,95 @@
-<html>
- <head>
- <style>
-/* search box*/
-.searchbox_1{
-background-color: #fffbf8;
-padding:10px;
-width:600px;
-margin: 100px auto;
--webkit-box-sizing:border-box;
--moz-box-sizing:border-box;
-box-sizing:border-box;
-border-radius:6px;
--webkit-box-shadow:
-0 2px 4px 0 rgba(72, 72, 72, 0.83),
-0 10px 15px 0 rgba(126, 126, 126, 0.12),
-0 -2px 6px 1px rgba(199, 199, 199, 0.55) inset,
-0 2px 4px 2px rgba(255, 255, 255, 0.83) inset;
--moz-box-shadow:
-0 2px 4px 0 rgba(72, 72, 72, 0.83),
-0 10px 15px 0 rgba(126, 126, 126, 0.12),
-0 -2px 6px 1px rgba(199, 199, 199, 0.55) inset,
-0 2px 4px 2px rgba(255, 255, 255, 0.83) inset;
-box-shadow:
-0 2px 4px 0 rgba(72, 72, 72, 0.83),
-0 10px 15px 0 rgba(126, 126, 126, 0.12),
-0 -2px 6px 1px rgba(199, 199, 199, 0.55) inset,
-0 2px 4px 2px rgba(255, 255, 255, 0.83) inset;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Search Box Design</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<style>
+
+@import url('https://fonts.googleapis.com/css?family=Comfortaa');
+
+*{
+	margin: 0;
+	padding: 0;
+	outline: none;
+	box-sizing: border-box;
+	font-family: 'Comfortaa', cursive;
 }
-.search_1{
-width:500px;
-height:35px;
-padding-left:15px;
-border-radius:6px;
-border:none;
-color:#0F0D0D;;
-font-weight:500;
-background-color:#E2EFF7;;
--webkit-box-shadow:
-0 -2px 2px 0 rgba(199, 199, 199, 0.55),
-0 1px 1px 0 #fff,
-0 2px 2px 1px #fafafa,
-0 2px 4px 0 #b2b2b2 inset,
-0 -1px 1px 0 #f2f2f2 inset,
-0 15px 15px 0 rgba(41, 41, 41, 0.09) inset;
--moz-box-shadow:
-0 -2px 2px 0 rgba(199, 199, 199, 0.55),
-0 1px 1px 0 #fff,
-0 2px 2px 1px #fafafa,
-0 2px 4px 0 #b2b2b2 inset,
-0 -1px 1px 0 #f2f2f2 inset,
-0 15px 15px 0 rgba(41, 41, 41, 0.09) inset;
-box-shadow:
-0 -2px 2px 0 rgba(199, 199, 199, 0.55),
-0 1px 1px 0 #fff,
-0 2px 2px 1px #fafafa,
-0 2px 4px 0 #b2b2b2 inset,
-0 -1px 1px 0 #f2f2f2 inset,
-0 15px 15px 0 rgba(41, 41, 41, 0.09) inset;
+
+body{
+	background:
+	background-size: cover;
+	width: 100%;
+	height: 100vh;
 }
-.submit_1{
-width:30px;
-height:30px;
-background-image:microphone-btn.png;
-background-repeat: no-repeat;
-background-position: 17px 5px;
-background-color:transparent;
--webkit-background-size:20px 20px;
-background-size:20px 20px;
-border:none;
-cursor:pointer;
+
+.wrapper{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #00ff99;
+    max-width: 550px;
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
 }
-.search_1:focus{
-outline:0;
+
+.wrapper .input {
+    width: 85%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
 }
+
+.searchbtn {
+    background:#00ff99;
+    width: 10%;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+.searchbtn .fas{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+}
+
 </style>
 </head>
-
-
 <body>
-<!-- search form 1 -->
-<form class="searchbox_1" action="">
-<input type="search" class="search_1" placeholder="Speak to search" />
-<button type="submit" class="submit_1" value="search"><img src = 'web1/microphone-btn.png' width=30px height=30px></button>
-</form>
+	
+
+<section class="w3-container"> 
+<div class="wrapper">
+	<input type="text" class="input" 
+	placeholder="What are you looking for?">
+	<div class="searchbtn"><button onclick="location.href='{% url 'web1:output' %}'"><i class="fa fa-microphone" style="font-size:48px;color:red"></i></button></div>
+</div>
+</section>
+<section class="w3-container"> 
+        {% if list %}
+<table>
+<tr>
+    <td>
+        {{ list.0 }}
+    </td>
+    <td>
+        {{ list.1 }}
+    </td>
+</tr>
+</table>
+        {% endif %}
+		 {% if text %}
+        <h6>{{ text }}</h6>
+        {% endif %}
+</section>
 </body>
 </html>
-</html>
-   </body>
-</html>
-
